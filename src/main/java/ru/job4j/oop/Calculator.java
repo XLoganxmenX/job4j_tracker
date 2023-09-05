@@ -27,7 +27,6 @@ public class Calculator {
     public static void main(String[] args) {
         int result = Calculator.sum(10);
         System.out.println(result);
-
         System.out.println(minus(15));
         System.out.println(new Calculator().divide(5));
         System.out.println(new Calculator().sumAllOperation(30));
