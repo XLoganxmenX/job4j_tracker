@@ -1,7 +1,6 @@
 package ru.job4j.oop;
 
 public class Calculator {
-
     private static int x = 5;
 
     public static int sum(int y) {
