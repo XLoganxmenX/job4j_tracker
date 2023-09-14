@@ -14,6 +14,25 @@ public class FindEl {
         return rsl;
     }
 
+    public static boolean sent(String value, String[] abuses) throws ElementAbuseException {
+        for (int i = 0; i < abuses.length; i++) {
+            if (abuses[i].equals(value)) {
+                throw new ElementAbuseException("Contains wrong word");
+            }
+        }
+        return true;
+    }
+
+    public static void process(String[] values, String key, String[] abuses) {
+        try {
+            if (indexOf(values, key) != -1) {
+                sent(key, abuses);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         String[] string = "Mama washed window".split(" ");
         try {
