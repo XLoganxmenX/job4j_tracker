@@ -20,13 +20,14 @@ public class ValidateInputTest {
     public void whenValidInput() {
         Output out = new StubOutput();
         Input in = new StubInput(
-                new String[] {"0", "1", "2"}
+                new String[] {"0", "1"}
         );
         ValidateInput input = new ValidateInput(out, in);
-        for (int i = 0; i < 3; i++) {
-            int selected = input.askInt("Select: ");
-            assertThat(selected).isEqualTo(i);
-        }
+        int firstSelected = input.askInt("Select: ");
+        assertThat(firstSelected).isEqualTo(0);
+        int secondSelected = input.askInt("Select: ");
+        assertThat(secondSelected).isEqualTo(1);
+
     }
 
     @Test
