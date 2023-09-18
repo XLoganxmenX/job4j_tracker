@@ -35,7 +35,7 @@ public class Tracker {
     }
 
     public List<Item> findAll() {
-        return List.copyOf(items);
+        return items;
     }
 
     public Item findById(int id) {
@@ -45,7 +45,6 @@ public class Tracker {
 
     public List<Item> findByName(String key) {
         List<Item> rsl = new ArrayList<>();
-        int count = 0;
         for (Item item : items) {
             if (item.getName().equals(key)) {
                 rsl.add(item);
@@ -57,9 +56,8 @@ public class Tracker {
 
     public void delete(int id) {
         int index = indexOf(id);
-        if (index == -1) {
-            return;
+        if (index != -1) {
+            items.remove(index);
         }
-        items.remove(index);
     }
 }
