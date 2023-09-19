@@ -35,7 +35,7 @@ public class Tracker {
     }
 
     public List<Item> findAll() {
-        return items;
+        return List.copyOf(items);
     }
 
     public Item findById(int id) {
@@ -50,7 +50,6 @@ public class Tracker {
                 rsl.add(item);
             }
         }
-        rsl = List.copyOf(rsl);
         return rsl;
     }
 
