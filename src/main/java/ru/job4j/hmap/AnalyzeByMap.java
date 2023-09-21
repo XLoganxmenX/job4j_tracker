@@ -33,15 +33,57 @@ public class AnalyzeByMap {
     }
 
     public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
-        Map<String, Integer> map = new LinkedHashMap<>();
-        return List.of();
+        Map<String, Integer> subjectMap = new LinkedHashMap<>();
+        int pupilCount = 0;
+        List<Label> listOfLabels = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            for (Subject subject : pupil.subjects()) {
+                if (subjectMap.containsKey(subject.name())) {
+                    subjectMap.put(subject.name(), subjectMap.get(subject.name()) + subject.score());
+                 } else {
+                    subjectMap.put(subject.name(), subject.score());
+                }
+            }
+            pupilCount++;
+        }
+        for (String subject : subjectMap.keySet()) {
+            Label label = new Label(subject, (double) subjectMap.get(subject) / pupilCount);
+            listOfLabels.add(label);
+        }
+        return List.copyOf(listOfLabels);
     }
 
     public static Label bestStudent(List<Pupil> pupils) {
-        return null;
+        List<Label> allLabel = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            int scoreSum = 0;
+            for (Subject subject : pupil.subjects()) {
+                scoreSum += subject.score();
+            }
+            Label pupilLabel = new Label(pupil.name(), scoreSum);
+            allLabel.add(pupilLabel);
+        }
+        allLabel.sort(Comparator.naturalOrder());
+        return allLabel.get(allLabel.size() - 1);
     }
 
     public static Label bestSubject(List<Pupil> pupils) {
-        return null;
+        Map<String, Integer> subjectMap = new LinkedHashMap<>();
+        List<Label> listOfLabels = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            for (Subject subject : pupil.subjects()) {
+                if (subjectMap.containsKey(subject.name())) {
+                    subjectMap.put(subject.name(), subjectMap.get(subject.name()) + subject.score());
+                } else {
+                    subjectMap.put(subject.name(), subject.score());
+                }
+            }
+        }
+        for (String subject : subjectMap.keySet()) {
+            Label label = new Label(subject, (double) subjectMap.get(subject));
+            listOfLabels.add(label);
+        }
+        listOfLabels.sort(Comparator.naturalOrder());
+        return listOfLabels.get(listOfLabels.size() - 1);
     }
 }
