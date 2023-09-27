@@ -38,7 +38,6 @@ public class AnalyzeByMap {
         List<Label> listOfLabels = new ArrayList<>();
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                // subjectMap.put(subject.name(), subjectMap.getOrDefault(subject.name(), 0) + subject.score());
                 subjectMap.merge(subject.name(), subject.score(), Integer::sum);
             }
             pupilCount++;
