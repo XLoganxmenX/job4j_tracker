@@ -1,4 +1,4 @@
-package ru.job4j.search;
+package ru.job4j.record.search;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -22,7 +22,7 @@ public class PhoneDictionary {
         Predicate<Person> addressContains = person -> person.getAddress().contains(key);
         Predicate<Person> combine = nameContains.or(surnameContains).or(phoneContains).or(addressContains);
         ArrayList<Person> result = new ArrayList<>();
-        for (Person person : persons) {
+        for (var person : persons) {
             if (combine.test(person)) {
                 result.add(person);
             }
