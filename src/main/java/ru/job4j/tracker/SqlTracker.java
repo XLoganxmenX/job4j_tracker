@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import ru.job4j.ex.ElementNotFoundException;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
@@ -63,6 +65,9 @@ public class SqlTracker implements Store {
             statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             statement.setInt(3, id);
             rsl = statement.executeUpdate() > 0;
+            if (rsl) {
+                item.setId(id);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,8 +95,10 @@ public class SqlTracker implements Store {
             try (ResultSet resultSet = statement.executeQuery()) {
                 itemsFromDB = extractItems(resultSet);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ElementNotFoundException e) {
+            System.out.println(e);
         }
         return itemsFromDB;
     }
@@ -106,10 +113,11 @@ public class SqlTracker implements Store {
             try (ResultSet resultSet = statement.executeQuery()) {
                 itemsFromDB = extractItems(resultSet);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ElementNotFoundException e) {
+            System.out.println(e);
         }
-
         return itemsFromDB;
     }
 
@@ -123,8 +131,10 @@ public class SqlTracker implements Store {
             try (ResultSet resultItem = statement.executeQuery()) {
                 itemFromDB = extractItems(resultItem).get(0);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ElementNotFoundException e) {
+            System.out.println(e);
         }
         return itemFromDB;
     }
@@ -137,10 +147,10 @@ public class SqlTracker implements Store {
         );
     }
 
-    private List<Item> extractItems(ResultSet queryResult) throws SQLException {
+    private List<Item> extractItems(ResultSet queryResult) throws SQLException, ElementNotFoundException {
         List<Item> itemsFromDB = null;
         if (!queryResult.next()) {
-            throw new SQLException("Items not found");
+            throw new ElementNotFoundException("Items not found");
         } else {
             itemsFromDB = new LinkedList<>();
             do {
