@@ -12,6 +12,25 @@ import static org.mockito.Mockito.when;
 class FindByNameActionTest {
 
     @Test
+    public void whenFindNotExistItem() {
+        Output output = new StubOutput();
+        Store tracker = new MemTracker();
+        FindByNameAction findByNameAction = new FindByNameAction(output);
+        String itemsName = "Item";
+
+        Input input = mock(Input.class);
+        when(input.askStr(any(String.class))).thenReturn(itemsName);
+
+        findByNameAction.execute(input, tracker);
+
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "=== Find items by name ===" + ln
+                        + "Заявки с именем: " + itemsName + " не найдены." + ln
+        );
+    }
+
+    @Test
     public void whenFindWithOneItem() {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
@@ -76,24 +95,4 @@ class FindByNameActionTest {
                         + secondSavedItem + ln
         );
     }
-
-    @Test
-    public void whenFindNotExistItem() {
-        Output output = new StubOutput();
-        Store tracker = new MemTracker();
-        FindByNameAction findByNameAction = new FindByNameAction(output);
-        String itemsName = "Item";
-
-        Input input = mock(Input.class);
-        when(input.askStr(any(String.class))).thenReturn(itemsName);
-
-        findByNameAction.execute(input, tracker);
-
-        String ln = System.lineSeparator();
-        assertThat(output.toString()).isEqualTo(
-                "=== Find items by name ===" + ln
-                        + "Заявки с именем: " + itemsName + " не найдены." + ln
-        );
-    }
-
 }
