@@ -1,35 +1,28 @@
 package ru.job4j.tracker;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Item implements Comparable<Item> {
+    @NonNull
     private int id;
+
+    @NonNull
     private String name;
 
     private LocalDateTime created = LocalDateTime.now();
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
 
-    public Item() {
-    }
-
     public Item(String name) {
         this.name = name;
-    }
-
-    public Item(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Item(int id, String name, LocalDateTime created) {
-        this.id = id;
-        this.name = name;
-        this.created = created;
     }
 
     @Override
