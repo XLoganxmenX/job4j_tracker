@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 @Getter
 public class Permission {
+
     private int id;
     private String name;
 
