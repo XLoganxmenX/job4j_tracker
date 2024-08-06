@@ -14,7 +14,6 @@ import java.util.Objects;
 public class Item implements Comparable<Item> {
     @NonNull
     private int id;
-
     @NonNull
     private String name;
 
