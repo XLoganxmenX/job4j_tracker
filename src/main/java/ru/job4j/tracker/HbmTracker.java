@@ -89,7 +89,7 @@ public class HbmTracker implements Store {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            Query<Item> query = session.createQuery("from User WHERE name LIKE :fName", Item.class)
+            Query<Item> query = session.createQuery("from Item WHERE name LIKE :fName", Item.class)
                     .setParameter("fName",  "%" + key + "%");
             items = query.getResultList();
             session.getTransaction().commit();
